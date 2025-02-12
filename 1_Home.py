@@ -8,28 +8,25 @@ st.title("Value at Risk (VaR)")
 
 
 # Página inicial
-<<<<<<< HEAD
 
 st.write("""
     ## Bem-vindo ao Projeto de Cálculo do VaR!
-=======
->>>>>>> 22d97769879d8caf211307a1071f5f9fce9095da
 
-st.write("""
-## Bem-vindo ao Projeto de Cálculo do VaR!
+    Este projeto tem como objetivo apresentar diferentes métodos para calcular o **Value at Risk (VaR)**, uma métrica amplamente utilizada para medir o risco financeiro. Abaixo estão os métodos disponíveis:
 
-Este projeto tem como objetivo apresentar diferentes métodos para calcular o **Value at Risk (VaR)**, uma métrica amplamente utilizada para medir o risco financeiro. Abaixo estão os métodos disponíveis:
+    ### Métodos de Cálculo do VaR:
+    1. **Método Paramétrico**:
+       - Assume que os retornos seguem uma distribuição normal.
+       - Veja o exemplo no Excel: [Clique aqui para visualizar](https://docs.google.com/spreadsheets/d/1dzqBfpH18qMkjlTLS8hYHwKHgPz2YFSg/edit?usp=sharing&ouid=100076090908713606520&rtpof=true&sd=true)
 
-### Métodos de Cálculo do VaR:
-1. **Método Paramétrico**:
-   - Assume que os retornos seguem uma distribuição normal.
-   - Veja o exemplo no Excel: [Clique aqui para visualizar](https://docs.google.com/spreadsheets/d/1dzqBfpH18qMkjlTLS8hYHwKHgPz2YFSg/edit?usp=sharing&ouid=100076090908713606520&rtpof=true&sd=true)
+    2. **Simulação de Monte Carlo**:
+       - Utiliza simulações aleatórias para estimar o VaR.
+       - Acesse a página **Simulação de Monte Carlo** para ver um exemplo.
 
-2. **Simulação de Monte Carlo**:
-   - Utiliza simulações aleatórias para estimar o VaR.
-   - Acesse a página **Simulação de Monte Carlo** para ver um exemplo.
+    3. **Método Histórico**:
+       - Utiliza dados históricos de retornos para estimar o VaR.
+       - Acesse a página **Método Histórico** para ver um exemplo.
 
-<<<<<<< HEAD
     ### Como usar:
     - Utilize o menu lateral para navegar entre as páginas e explorar cada método.
 """)
@@ -43,25 +40,6 @@ Entre em contato comigo:
 🔗 **LinkedIn:** [William Paiva](https://www.linkedin.com/in/william-paiva-fin/)  
 """)
 
-=======
-3. **Método Histórico**:
-   - Utiliza dados históricos de retornos para estimar o VaR.
-   - Acesse a página **Método Histórico** para ver um exemplo.
-
-### Como usar:
-- Utilize o menu lateral para navegar entre as páginas e explorar cada método.
-""")
-
-# Seção de colaboração
-
-st.markdown("""
-Entre em contato comigo:  
-📧 **E-mail:** william.paiva@outlook.com  
-📱 **WhatsApp:** +55 11 98576-0234  
-🔗 **LinkedIn:** [William Paiva](https://www.linkedin.com/in/william-paiva-fin/)  
-""")
-
->>>>>>> 22d97769879d8caf211307a1071f5f9fce9095da
 # Botão para redirecionar para o LinkedIn (opcional)
 st.markdown("""
 <a href="https://www.linkedin.com/in/william-paiva-fin/" target="_blank">
