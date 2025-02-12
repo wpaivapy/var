@@ -1,12 +1,12 @@
 import streamlit as st
 import numpy as np
-import locale
+
 
 # Configurar layout wide
 st.set_page_config(page_title="Simulação de VaR Monte Carlo", layout="wide")
 
 # Definir local para formatação monetária brasileira
-locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
+
 
 # Título do app
 st.title("Simulação de VaR Monte Carlo")
