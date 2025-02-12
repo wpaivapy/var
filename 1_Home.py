@@ -4,15 +4,12 @@ import streamlit as st
 st.set_page_config(page_title="Cálculo do VaR", page_icon="📊", layout="wide")
 
 # Título da página
-st.title("Projeto de Cálculo do Value at Risk (VaR)")
+st.title("Value at Risk (VaR)")
 
-# Menu lateral
-st.sidebar.title("Navegação")
-pagina = st.sidebar.radio("Selecione a página:", ["Início", "Método Paramétrico", "Simulação de Monte Carlo", "Método Histórico"])
 
 # Página inicial
-if pagina == "Início":
-    st.write("""
+
+st.write("""
     ## Bem-vindo ao Projeto de Cálculo do VaR!
 
     Este projeto tem como objetivo apresentar diferentes métodos para calcular o **Value at Risk (VaR)**, uma métrica amplamente utilizada para medir o risco financeiro. Abaixo estão os métodos disponíveis:
@@ -32,23 +29,23 @@ if pagina == "Início":
 
     ### Como usar:
     - Utilize o menu lateral para navegar entre as páginas e explorar cada método.
-    """)
+""")
 
-    # Seção de colaboração
+# Seção de colaboração
 
-    st.markdown("""
-    Entre em contato comigo:  
-    📧 **E-mail:** william.paiva@outlook.com  
-    📱 **WhatsApp:** +55 11 98576-0234  
-    🔗 **LinkedIn:** [William Paiva](https://www.linkedin.com/in/william-paiva-fin/)  
-    """)
+st.markdown("""
+Entre em contato comigo:  
+📧 **E-mail:** william.paiva@outlook.com  
+📱 **WhatsApp:** +55 11 98576-0234  
+🔗 **LinkedIn:** [William Paiva](https://www.linkedin.com/in/william-paiva-fin/)  
+""")
 
-    # Botão para redirecionar para o LinkedIn (opcional)
-    st.markdown("""
-    <a href="https://www.linkedin.com/in/william-paiva-fin/" target="_blank">
-        <button style="background-color: #0A66C2; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-            Conectar no LinkedIn
-        </button>
-    </a>
-    """, unsafe_allow_html=True)
+# Botão para redirecionar para o LinkedIn (opcional)
+st.markdown("""
+<a href="https://www.linkedin.com/in/william-paiva-fin/" target="_blank">
+    <button style="background-color: #0A66C2; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Conectar no LinkedIn
+    </button>
+</a>
+""", unsafe_allow_html=True)
 
