@@ -6,9 +6,7 @@ st.set_page_config(page_title="Cálculo do VaR", page_icon="📊", layout="wide"
 # Título da página
 st.title("Projeto de Cálculo do Value at Risk (VaR)")
 
-# Menu lateral
-st.sidebar.title("Navegação")
-pagina = st.sidebar.radio("Selecione a página:", ["Início", "Método Paramétrico", "Simulação de Monte Carlo", "Método Histórico"])
+
 
 # Página inicial
 if pagina == "Início":
