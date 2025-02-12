@@ -1,15 +1,15 @@
 import streamlit as st
 import numpy as np
 
-
 # Configurar layout wide
 st.set_page_config(page_title="Simulação de VaR Monte Carlo", layout="wide")
 
-# Definir local para formatação monetária brasileira
-
-
 # Título do app
 st.title("Simulação de VaR Monte Carlo")
+
+# Função para formatar valores monetários
+def formatar_moeda(valor):
+    return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
 # Entrada do valor da exposição sem formatação (internamente)
 valor_exposicao = st.number_input("Valor da Exposição (R$)", min_value=1_000_000, value=100_000_000, step=1_000_000)
@@ -33,13 +33,13 @@ if st.button("Calcular VaR"):
 
     # Exibir resultado formatado
     st.markdown(f"### Resultado da Simulação:")
-    st.metric("Valor da Exposição", locale.currency(valor_exposicao, grouping=True))
+    st.metric("Valor da Exposição", formatar_moeda(valor_exposicao))
     st.metric(f"VaR Monte Carlo ({int(nivel_confianca * 100)}% de confiança)",
-              locale.currency(abs(var_monte_carlo), grouping=True))
+              formatar_moeda(abs(var_monte_carlo)))
 
     # Explicação do VaR
     st.markdown(
         f"🔹 **O que significa esse resultado?**\n\n"
         f"O **VaR Monte Carlo ({int(nivel_confianca * 100)}% de confiança)** indica que, em **{int(nivel_confianca * 100)}% dos casos**, "
-        f"a perda **não deve ultrapassar** {locale.currency(abs(var_monte_carlo), grouping=True)} em um único dia, considerando as premissas de volatilidade e retorno médio."
+        f"a perda **não deve ultrapassar** {formatar_moeda(abs(var_monte_carlo))} em um único dia, considerando as premissas de volatilidade e retorno médio."
     )
