@@ -50,7 +50,6 @@ urllib3==2.3.0
 watchdog==6.0.0
 webencodings==0.5.1
 yfinance==0.2.52
-=======
 altair==5.5.0
 attrs==25.1.0
 beautifulsoup4==4.13.3
@@ -103,4 +102,4 @@ urllib3==2.3.0
 watchdog==6.0.0
 webencodings==0.5.1
 yfinance==0.2.52
->>>>>>> 22d97769879d8caf211307a1071f5f9fce9095da
+
