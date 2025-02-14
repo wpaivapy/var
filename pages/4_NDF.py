@@ -58,9 +58,9 @@ st.write(format_currency(valor_liquido, "BRL", locale="pt_BR"))
 # Interpretação do ajuste
 st.subheader("Interpretação da Operação")
 if (posicao == "Importador" and cotacao_fechamento > cotacao_fechada) or (posicao == "Exportador" and cotacao_fechamento < cotacao_fechada):
-    st.write("Como a cotação de fechamento foi desfavorável à posição assumida, a empresa **deverá receber** o ajuste na moeda local. Isso ocorre porque a NDF protegeu a empresa contra a variação cambial.")
+    st.info("Como a cotação de fechamento foi desfavorável à posição assumida, a empresa **deverá receber** o ajuste na moeda local. Isso ocorre porque a NDF protegeu a empresa contra a variação cambial.")
 else:
-    st.write("Como a cotação de fechamento foi favorável à posição assumida, a empresa **deverá pagar** o ajuste na moeda local. Isso ocorre porque a NDF garantiu um valor protegido, mas a cotação de mercado foi mais vantajosa.")
+    st.info("Como a cotação de fechamento foi favorável à posição assumida, a empresa **deverá pagar** o ajuste na moeda local. Isso ocorre porque a NDF garantiu um valor protegido, mas a cotação de mercado foi mais vantajosa.")
 
 
 st.markdown("""
