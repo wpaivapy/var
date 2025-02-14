@@ -70,3 +70,18 @@ if st.button('Buscar Cotação e Calcular VaR'):
         st.error('Ativo não encontrado ou código inválido.')
 
 
+st.markdown("""
+Entre em contato comigo:  
+📧 **E-mail:** william.paiva@outlook.com  
+📱 **WhatsApp:** +55 11 98576-0234  
+🔗 **LinkedIn:** [William Paiva](https://www.linkedin.com/in/william-paiva-fin/)  
+""")
+
+# Botão para redirecionar para o LinkedIn (opcional)
+st.markdown("""
+<a href="https://www.linkedin.com/in/william-paiva-fin/" target="_blank">
+    <button style="background-color: #0A66C2; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Conectar no LinkedIn
+    </button>
+</a>
+""", unsafe_allow_html=True)
