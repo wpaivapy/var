@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from babel.numbers import format_currency
 from io import BytesIO
+import io
 
 # Configurar layout wide
 st.set_page_config(layout="wide")
@@ -64,25 +65,31 @@ if (posicao == "Importador" and cotacao_fechamento > cotacao_fechada) or (posica
 else:
     st.info("Como a cotação de fechamento foi favorável à posição assumida, a empresa **deverá pagar** o ajuste na moeda local. Isso ocorre porque a NDF garantiu um valor protegido, mas a cotação de mercado foi mais vantajosa.")
 
-# Criar DataFrame para exportação
+# Criar um DataFrame com os resultados
 df = pd.DataFrame({
-    "Parâmetro": [
-        "Posição", "Moeda", rotulo_cotacao, "Notional", "Cotação de Fechamento",
-        "Ajuste", "Pagamento", "Valor Líquido"
-    ],
-    "Valor": [
-        posicao, moeda, cotacao_fechada, notional, cotacao_fechamento,
-        ajuste, pagamento, valor_liquido
-    ]
+    "Posição": [posicao],
+    "Moeda": [moeda],
+    "Cotação Fechada": [cotacao_fechada],
+    "Notional": [notional],
+    "Cotação de Fechamento": [cotacao_fechamento],
+    "Ajuste": [ajuste],
+    "Pagamento": [pagamento],
+    "Valor Líquido": [valor_liquido],
+     # Certifique-se de que esta variável contém a explicação correta
 })
 
-# Criar botão para exportar para Excel
-output = BytesIO()
-with pd.ExcelWriter(output, engine="openpyxl") as writer:
-    df.to_excel(writer, sheet_name="Ajuste NDF", index=False)
+# Criar um buffer de memória
+output = io.BytesIO()
+
+# Criar um writer do Pandas e salvar no buffer
+with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
+    df.to_excel(writer, sheet_name="Ajuste_NDF", index=False)
     writer.close()
+
+# Mover para o início do buffer
 output.seek(0)
 
+# Criar botão de download
 st.download_button(
     label="📥 Baixar Resultados em Excel",
     data=output,
