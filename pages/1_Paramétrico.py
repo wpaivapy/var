@@ -1,79 +1,75 @@
 import streamlit as st
 import numpy as np
+from scipy.stats import norm
+import pandas as pd
 
-# Configuração para layout wide
-st.set_page_config(page_title="VaR - Método Paramétrico", layout="wide")
+# Configuração da página
+st.set_page_config(page_title="Cálculo de VaR Paramétrico", layout="wide")
+st.title("Cálculo de VaR Paramétrico")
 
-st.title("Calculadora de Value at Risk - VaR - Método Paramétrico ")
-
-st.markdown("""
-### Explicação do Método Paramétrico para Cálculo do Value at Risk (VaR)
-
-O **método paramétrico** para calcular o Value at Risk (VaR) é baseado na premissa de que os retornos dos ativos seguem uma distribuição normal. Este método utiliza a média e o desvio padrão dos retornos históricos para estimar o risco de perda. Os passos básicos incluem:
-
-- **Coleta de Dados**: Obter uma série de retornos históricos do ativo.
-- **Cálculo da Média e Desvio Padrão**: Calcular a média (μ) e o desvio padrão (σ) dos retornos.
-- **Escolha do Nível de Confiança**: Definir um nível de confiança (por exemplo, 95% ou 99%) que determina o valor crítico (z) da distribuição normal.
-
-
-### Explicação Customizada para Cálculo do VaR para Notas do Tesouro Nacional (NTN)
-
-Para NTN, uma abordagem mais precisa leva em consideração que estes são títulos de renda fixa, cuja sensibilidade ao risco de taxa de juros pode ser medida pela **duração modificada**. Adaptamos o método paramétrico da seguinte forma:
-
-- **Duração Modificada**: Consideramos a duração modificada para ajustar a volatilidade dos retornos do título, já que ela reflete a sensibilidade do preço do título às mudanças nas taxas de juro.
-- **Volatilidade das Taxas de Juro**: Utilizamos a volatilidade das taxas de juro ao invés dos retornos diretos do título, para refletir melhor o risco de mercado para títulos de renda fixa.
-- **Yield to Maturity (YTM)**: Levamos em conta o YTM para calcular corretamente a duração modificada, pois isso afeta a sensibilidade do preço do título à variação das taxas.
-- **Delta Value de 1bp (DV01)**: Calculamos o DV01 para mostrar a sensibilidade do preço do título a uma mudança de 1 ponto base na taxa de juro.
-
+st.write("""
+O **Value at Risk (VaR) Paramétrico** estima a perda máxima potencial de um portfólio com base em sua volatilidade 
+(desvio padrão) e um nível de confiança, assumindo que os retornos seguem uma distribuição normal. Insira os dados 
+abaixo para calcular o VaR do seu portfólio em um horizonte de tempo específico!
 """)
 
+# Entrada do usuário
+st.subheader("Insira os dados do portfólio")
+valor_portfolio = st.number_input("💰 Valor do portfólio (R$)", min_value=0.0, value=1000000.0, format="%.2f")
+volatilidade_anual = st.number_input("📉 Volatilidade anual (% a.a.)", min_value=0.0, value=20.0, format="%.2f")
+nivel_confianca = st.selectbox("🔍 Nível de confiança", options=[0.90, 0.95, 0.99], index=1)
+horizonte_tempo = st.number_input("📅 Horizonte de tempo (dias)", min_value=1, value=1, format="%d")
 
-# Função para calcular VaR ajustado por duração modificada
-def calculate_var_adjusted(current_value, macaulay_duration, ytm, rate_volatility, confidence_level, time_horizon):
-    # Calculando duração modificada
-    modified_duration = macaulay_duration / (1 + ytm)
+# Botão para calcular
+if st.button("🚀 Calcular VaR"):
+    # Conversão dos inputs
+    volatilidade_diaria = volatilidade_anual / 100 / np.sqrt(252)  # Converte volatilidade anual para diária
+    volatilidade_horizonte = volatilidade_diaria * np.sqrt(horizonte_tempo)  # Ajusta para o horizonte de tempo
+    z_score = norm.ppf(nivel_confianca)  # Z-score correspondente ao nível de confiança
 
-    z = {95: 1.645, 99: 2.326}[confidence_level]
-    daily_std = modified_duration * rate_volatility / np.sqrt(252)  # Assumindo 252 dias de negociação no ano
-    var = current_value * (z * daily_std * np.sqrt(time_horizon))
-    return var, modified_duration
+    # Cálculo do VaR
+    var = valor_portfolio * volatilidade_horizonte * z_score
+    var_percentual = (var / valor_portfolio) * 100
 
+    # Exibição dos resultados
+    st.subheader("📊 Resultado do VaR")
+    st.success(f"✅ **VaR ({nivel_confianca*100:.0f}% de confiança):** R$ {var:,.2f}")
+    st.write(f"**VaR percentual:** {var_percentual:.2f}% do valor do portfólio")
 
-# Função para calcular DV01
-def calculate_dv01(present_value, modified_duration):
-    return -modified_duration * present_value * 0.0001
+    # Interpretação do resultado
+    st.write("🔍 **O que isso significa?**")
+    st.write(f"""
+    Com {nivel_confianca*100:.0f}% de confiança, a perda máxima esperada do portfólio em {horizonte_tempo} 
+    dia(s) é de R$ {var:,.2f}. Em outras palavras, há uma probabilidade de {100 - nivel_confianca*100:.0f}% de que 
+    as perdas excedam esse valor, considerando a volatilidade informada ({volatilidade_anual:.2f}% a.a.) e uma 
+    distribuição normal dos retornos.
+    """)
+    st.write(f"""
+    - **Volatilidade diária:** {(volatilidade_diaria*100):.2f}%  
+    - **Volatilidade no horizonte:** {(volatilidade_horizonte*100):.2f}%  
+    - **Z-score usado:** {z_score:.2f}
+    """)
 
+    # Gráfico simples da distribuição
+    st.subheader("📈 Visualização da Distribuição")
+    x = np.linspace(-4, 4, 100)  # Z-scores para a curva normal
+    y = norm.pdf(x, 0, 1)  # Densidade da normal padrão
+    fig = st.line_chart(pd.DataFrame({"Z-score": x, "Densidade": y}).set_index("Z-score"))
+    st.write(f"A linha vertical seria em {z_score:.2f}, delimitando o VaR na cauda esquerda.")
 
-# Interface Streamlit
+# Informações adicionais
+st.markdown("""
+### Como o VaR é calculado?
+O VaR paramétrico usa a fórmula:  
+**VaR = Valor do Portfólio × Volatilidade no Horizonte × Z-score**  
+- **Volatilidade no horizonte** = Volatilidade diária × √(dias)  
+- **Z-score** = Percentil da distribuição normal para o nível de confiança (ex.: 1,65 para 95%).  
+""")
 
-
-# Usando um container para agrupar entradas de dados
-with st.container():
-    col1, col2 = st.columns(2)
-
-    with col1:
-        current_value = st.number_input("Valor atual da NTN (PU)", value=1000.00, step=100.00, format="%.2f")
-        macaulay_duration = st.number_input("Duração Macaulay do Título", value=5.0, step=0.1)
-        ytm = st.number_input("Yield to Maturity (YTM) como fração decimal", value=0.05, step=0.01)  # Ex: 0.05 para 5%
-
-    with col2:
-        rate_volatility = st.number_input("Volatilidade das Taxas de Juro (em %) por ano", value=1.0,
-                                          step=0.1) / 100  # Convertendo para fração decimal
-        confidence_level = st.selectbox("Nível de confiança", [95, 99])
-        time_horizon = st.number_input("Horizonte de tempo (dias)", value=1, min_value=1, step=1)
-
-if st.button("Calcular VaR"):
-    var, modified_duration = calculate_var_adjusted(current_value, macaulay_duration, ytm, rate_volatility,
-                                                    confidence_level, time_horizon)
-    dv01 = calculate_dv01(current_value, modified_duration)
-
-    st.write(f"**VaR:** R$ {var:.2f}")
-    st.write(f"**DV01:** R$ {dv01:.2f}")
-    st.write("**Interpretação:**")
-    st.write(
-        f"- Há {confidence_level}% de chance de que a perda não exceda R$ {var:.2f} em {time_horizon} dia(s), assumindo a duração modificada e a volatilidade das taxas de juro fornecidas.")
-    st.write(
-        f"- O DV01 (Delta Value de 1bp) indica que um aumento de 1 ponto base nas taxas de juro resultaria em uma perda aproximada de R$ {abs(dv01):.2f} no valor do título.")
-
-st.markdown(
-    "**Nota**: O YTM deve ser fornecido como uma fração decimal. A volatilidade das taxas de juro deve ser em termos anuais. Ela é convertida para diária para o cálculo.")
+# Contato
+st.markdown("""
+Entre em contato comigo:  
+📧 **E-mail:** william.paiva@outlook.com  
+📱 **WhatsApp:** +55 11 98576-0234  
+🔗 **LinkedIn:** [William Paiva](https://www.linkedin.com/in/william-paiva-fin/)  
+""")
