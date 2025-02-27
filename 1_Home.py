@@ -1,51 +1,57 @@
 import streamlit as st
 
 # Configuração da página
-st.set_page_config(page_title="Cálculo do VaR", page_icon="📊", layout="wide")
+st.set_page_config(page_title="Plataforma de Riscos e Hedge", page_icon="📊", layout="wide")
 
 # Título da página
-st.title("Value at Risk (VaR)")
+st.title("📊 Plataforma de Riscos e Hedge")
 
-
-# Página inicial
-
+# Seção de Introdução
 st.write("""
-    ## Bem-vindo ao Projeto de Cálculo do VaR!
+## Bem-vindo à Plataforma de Gestão de Riscos e Hedge Cambial! 💰📈
 
-    Este projeto tem como objetivo apresentar diferentes métodos para calcular o **Value at Risk (VaR)**, uma métrica amplamente utilizada para medir o risco financeiro. Abaixo estão os métodos disponíveis:
+Esta plataforma permite simular e calcular diferentes operações financeiras, auxiliando na **gestão de riscos**, **tomada de decisões estratégicas** e **proteção contra variações do mercado**.
 
-    ### Métodos de Cálculo do VaR:
-    1. **Método Paramétrico**:
-       - Assume que os retornos seguem uma distribuição normal.
-       - Veja o exemplo no Excel: [Clique aqui para visualizar](https://docs.google.com/spreadsheets/d/1dzqBfpH18qMkjlTLS8hYHwKHgPz2YFSg/edit?usp=sharing&ouid=100076090908713606520&rtpof=true&sd=true)
+Aqui você pode calcular desde o **Value at Risk (VaR)** até diferentes operações de **hedge** e **swaps**.
 
-    2. **Simulação de Monte Carlo**:
-       - Utiliza simulações aleatórias para estimar o VaR.
-       - Acesse a página **Simulação de Monte Carlo** para ver um exemplo.
+### 🔹 O que você pode calcular nesta plataforma?
+✅ **Value at Risk (VaR)** – Estime o risco de perdas financeiras com os métodos:
+   - **Paramétrico** (Distribuição Normal)
+   - **Histórico** (Baseado em dados reais)
+   - **Monte Carlo** (Simulação Estatística)
 
-    3. **Método Histórico**:
-       - Utiliza dados históricos de retornos para estimar o VaR.
-       - Acesse a página **Método Histórico** para ver um exemplo.
+✅ **Cálculo de Hedge Cambial** – Simule operações para minimizar riscos:
+   - **NDF (Non-Deliverable Forward)**: Proteja-se contra flutuações cambiais.
+   - **Swap Pré x Dólar**: Firme uma taxa pré-fixada para operações de exportação.
+   - **Swap Dólar x Selic**: Converta dívidas ou investimentos entre diferentes indexadores.
+   - **Swap IGP-M x DI**: Troque indexadores para otimizar passivos atrelados ao IGP-M.
 
-    ### Como usar:
-    - Utilize o menu lateral para navegar entre as páginas e explorar cada método.
-""")
+✅ **Mapeamento de Exposição Cambial**:
+   - Insira suas posições em diversas moedas.
+   - Calcule sua **exposição total por moeda e prazo**.
+   - Prepare-se para definir a melhor estratégia de hedge.
 
-# Seção de colaboração
+---
 
-st.markdown("""
-Entre em contato comigo:  
+### 📌 **Como utilizar?**
+1️⃣ **Escolha a funcionalidade desejada no menu lateral** 🏦  
+2️⃣ **Insira os parâmetros da operação ou risco que deseja calcular** ✍️  
+3️⃣ **Visualize os cálculos e gráficos interativos** 📊  
+4️⃣ **Exporte os resultados para Excel para análise detalhada** 📥  
+
+💡 **Transforme seus dados financeiros em decisões estratégicas!**
+
+---
+
+
+
 📧 **E-mail:** william.paiva@outlook.com  
 📱 **WhatsApp:** +55 11 98576-0234  
 🔗 **LinkedIn:** [William Paiva](https://www.linkedin.com/in/william-paiva-fin/)  
-""")
 
-# Botão para redirecionar para o LinkedIn (opcional)
-st.markdown("""
 <a href="https://www.linkedin.com/in/william-paiva-fin/" target="_blank">
     <button style="background-color: #0A66C2; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
         Conectar no LinkedIn
     </button>
 </a>
 """, unsafe_allow_html=True)
-
